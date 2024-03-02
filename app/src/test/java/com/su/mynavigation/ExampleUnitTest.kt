@@ -1,4 +1,4 @@
-package com.example.guacagoalie
+package com.su.mynavigation
 
 import org.junit.Test
 
