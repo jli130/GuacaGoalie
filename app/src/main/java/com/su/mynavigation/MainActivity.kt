@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         loadFragment(Dashboard())
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.dashboard
 
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
