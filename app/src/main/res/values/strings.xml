@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">GuacaGoalie</string>
+<<<<<<< HEAD
     <string name="google_map_api_key">AIzaSyBZOTKfyjzuXGrBSPdlqbUxgMRkdUgt-04</string>
+=======
+>>>>>>> 275803adcf45743a9f83447a43cb25980aff0348
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
