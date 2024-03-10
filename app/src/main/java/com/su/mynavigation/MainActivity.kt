@@ -1,8 +1,10 @@
 package com.su.mynavigation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         loadFragment(Dashboard())
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+        bottomNav.selectedItemId = R.id.dashboard
 
         bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
@@ -26,7 +29,9 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(Rewards())
                 }
                 R.id.map -> {
-                    loadFragment(Map())
+                    val nextPage = Intent(this, Map::class.java)
+                    startActivity(nextPage)
+                    finish()
                 }
             }
             true
