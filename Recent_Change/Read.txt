@@ -1,0 +1,1 @@
+You can copy and paste two files in this directory, check if they work.
