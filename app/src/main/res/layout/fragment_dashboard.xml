@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/nav_menu"/>
+        app:menu="@menu/nav_menu" />
+
     <TextView
         android:id="@+id/welcomeBackText"
         android:layout_width="wrap_content"
@@ -27,24 +28,24 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintHorizontal_bias="0.316"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092" />
+        app:layout_constraintVertical_bias="0.079" />
 
     <TextView
         android:id="@+id/usernameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="John Doe"
+        android:layout_width="162dp"
+        android:layout_height="21dp"
+        android:text="John Doeeeeeeee"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintHorizontal_bias="0.353"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintVertical_bias="0.116" />
 
     <TextView
         android:id="@+id/aboutMeText"
@@ -55,15 +56,15 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintHorizontal_bias="0.141"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <TextView
         android:id="@+id/aboutMeMessageText"
-        android:layout_width="302dp"
-        android:layout_height="76dp"
+        android:layout_width="324dp"
+        android:layout_height="66dp"
         android:ellipsize="end"
         android:maxLines="4"
         android:text="OMG HELLO! Howdy There! My name is John Doe! I am a thrilled user of Guacagoalie who loves travelling, having fun, and working out! I see myself using this app to help make my future more active and pleasant."
@@ -71,53 +72,71 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271"
+        app:layout_constraintVertical_bias="0.253"
         app:layout_wrapBehaviorInParent="vertical_only" />
 
     <TextView
         android:id="@+id/stepsNumberText"
         android:layout_width="118dp"
         android:layout_height="55dp"
+        android:gravity="center"
         android:text="0"
         android:textColor="#050505"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
+        app:layout_constraintVertical_bias="0.394" />
 
     <TextView
         android:id="@+id/weeklyGoalNumberText"
-        android:layout_width="243dp"
-        android:layout_height="54dp"
+        android:layout_width="127dp"
+        android:layout_height="55dp"
+        android:gravity="center"
         android:text="0"
         android:textColor="#050505"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.327"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.599" />
+        app:layout_constraintVertical_bias="0.545" />
 
     <TextView
         android:id="@+id/milestoneNumberText"
         android:layout_width="133dp"
         android:layout_height="51dp"
+        android:gravity="center"
         android:text="0"
         android:textColor="#000000"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintHorizontal_bias="0.129"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751" />
+        app:layout_constraintVertical_bias="0.688" />
+
+    <TextView
+        android:id="@+id/guacpointsText"
+        android:layout_width="133dp"
+        android:layout_height="51dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#000000"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.833" />
 
     <TextView
         android:id="@+id/stepsTodayText"
@@ -125,13 +144,13 @@
         android:layout_height="wrap_content"
         android:text="Steps Today"
         android:textColor="#040404"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.182"
+        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.454" />
 
     <TextView
         android:id="@+id/weeklyGoalText"
@@ -139,13 +158,13 @@
         android:layout_height="wrap_content"
         android:text="Weekly Goal"
         android:textColor="#020202"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653" />
+        app:layout_constraintVertical_bias="0.599" />
 
     <TextView
         android:id="@+id/milestoneGoalText"
@@ -153,13 +172,13 @@
         android:layout_height="wrap_content"
         android:text="Mile Stone Numbers"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.798" />
+        app:layout_constraintVertical_bias="0.734" />
 
     <ImageButton
         android:id="@+id/stepsTodayButton"
@@ -169,10 +188,10 @@
         android:tint="#040404"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.501" />
+        app:layout_constraintVertical_bias="0.456" />
 
     <ImageButton
         android:id="@+id/rewardsButton"
@@ -207,10 +226,10 @@
         android:src="@drawable/ic_baseline_settings_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <ImageButton
         android:id="@+id/miltstoneGoalButton"
@@ -219,10 +238,10 @@
         android:src="@drawable/ic_baseline_settings_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintVertical_bias="0.735" />
 
     <ImageButton
         android:id="@+id/guacpointsButton"
@@ -232,7 +251,7 @@
         android:tint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintHorizontal_bias="0.326"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.875" />
@@ -243,10 +262,10 @@
         android:layout_height="wrap_content"
         android:text="Guacpoints"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.194"
+        app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.875" />
@@ -257,7 +276,7 @@
         android:layout_height="wrap_content"
         android:text="Progress"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.732"
@@ -271,13 +290,21 @@
         android:layout_height="wrap_content"
         android:text="Rewards"
         android:textColor="#000000"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.723"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.877" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/avocado"
+        tools:layout_editor_absoluteX="250dp"
+        tools:layout_editor_absoluteY="16dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
