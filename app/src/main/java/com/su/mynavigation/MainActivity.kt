@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             dAbout.text = about
             dGoal.text = goal.toString()
 
-            
+
         }
 
         val milestoneButton = findViewById<ImageButton>(R.id.miltstoneGoalButton)
@@ -68,7 +68,9 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.rewards -> {
-
+                    val nextPage = Intent(this, Rewards::class.java)
+                    startActivity(nextPage)
+                    finish()
                 }
                 R.id.map -> {
                     val nextPage = Intent(this, Map::class.java)
