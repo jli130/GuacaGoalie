@@ -1,6 +1,8 @@
 package com.su.mynavigation
 
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
