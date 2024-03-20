@@ -135,7 +135,7 @@ class Dashboard : Fragment() {
             // get user input
             val newGoal = input.text.toString().toIntOrNull()
             if (newGoal != null) {
-                updateMilestoneGoal(newGoal)
+                updateMilestoneGoal(newGoal, mainIns)
             } else {
                 dialog.cancel()
             }
@@ -151,8 +151,8 @@ class Dashboard : Fragment() {
     /**
      * update the changed milestone steps from user, change the number in dashboard.xml
      */
-    private fun updateMilestoneGoal(newGoal: Int){
-        val rootView = requireView()
+    private fun updateMilestoneGoal(newGoal: Int,mainIns: MainActivity){
+        val rootView = mainIns
         val milestoneGoal = rootView.findViewById<TextView>(R.id.milestoneNumberText)
         val newGoalString = newGoal.toString()
 
