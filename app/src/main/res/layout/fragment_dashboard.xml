@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
+
+
+
     <!-- TODO: Update blank fragment layout -->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -153,12 +156,29 @@
         app:layout_constraintVertical_bias="0.454" />
 
     <TextView
+        android:id="@+id/dailyGoalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily Goal"
+        android:textColor="#020202"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.599" />
+
+
+    <TextView
         android:id="@+id/weeklyGoalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Weekly Goal"
         android:textColor="#020202"
         android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.111"
@@ -186,6 +206,7 @@
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
         android:tint="#040404"
+        android:tooltipText="This shows how many steps you've done today"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.344"
@@ -199,6 +220,7 @@
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
         android:tint="#040404"
+        android:tooltipText="You can use your GuacPoinrs to buy real stuff here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.836"
@@ -212,6 +234,7 @@
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
         android:tint="#040404"
+        android:tooltipText="This gives how much you have completed your milestone goal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.857"
@@ -249,6 +272,7 @@
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
         android:tint="#000000"
+        android:tooltipText="This is the overall virtual points you have after completing goals"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.326"
