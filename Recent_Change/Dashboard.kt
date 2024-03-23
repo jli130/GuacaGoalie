@@ -44,7 +44,7 @@ class Dashboard : Fragment() {
         // Inflate the layout for this fragment
         //val stepsTodayButton = view.findViewById<ImageButton>(R.id.stepsTodayButton)
         //TooltipCompat.setTooltipText(stepsTodayButton, "Your tooltip text here")
-        val milestoneButton = view.findViewById<ImageButton>(R.id.miltstoneGoalButton)
+        val milestoneButton = view.findViewById<ImageButton>(R.id.milestoneGoalButton)
         val imageButton = view.findViewById<ImageButton>(R.id.stepsTodayButton3)
         imageButton.setOnClickListener {
             displayAlertDialog()

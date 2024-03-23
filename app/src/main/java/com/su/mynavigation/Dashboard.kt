@@ -15,9 +15,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
-import android.util.Log
 import android.os.Handler
 import android.os.Looper
 
@@ -32,7 +29,7 @@ private var stepsTodayText: TextView? = null
  * Use the [Home.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Dashboard : Fragment(),SensorEventListener {
+class Dashboard : Fragment(), SensorEventListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -40,6 +37,7 @@ class Dashboard : Fragment(),SensorEventListener {
     private var stepSensor: Sensor? = null
     private val handler = Handler(Looper.getMainLooper())
     private val updateTask = object : Runnable {
+        private lateinit var imageButton: ImageButton
         override fun run() {
             stepsTodayText?.text = "Steps Today: ${currentStepCount}"
             handler.postDelayed(this, 1000) // Schedule this task again after 1 second
@@ -52,11 +50,9 @@ class Dashboard : Fragment(),SensorEventListener {
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
 
-        if(stepSensor == null){
+        if (stepSensor == null) {
             //handle absense sensor
         }
-
-
 
 
         arguments?.let {
@@ -93,8 +89,6 @@ class Dashboard : Fragment(),SensorEventListener {
     }
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,7 +98,7 @@ class Dashboard : Fragment(),SensorEventListener {
         //val stepsTodayButton = view.findViewById<ImageButton>(R.id.stepsTodayButton)
         //TooltipCompat.setTooltipText(stepsTodayButton, "Your tooltip text here")
 
-        val milestoneButton = view.findViewById<ImageButton>(R.id.miltstoneGoalButton)
+        val milestoneButton = view.findViewById<ImageButton>(R.id.milestoneGoalButton)
         val imageButton = view.findViewById<ImageButton>(R.id.stepsTodayButton3)
         imageButton?.setOnClickListener {
             // displayAlertDialog()
@@ -135,7 +129,6 @@ class Dashboard : Fragment(),SensorEventListener {
                 }
             }
     }
-
 
 
     /**
@@ -183,7 +176,7 @@ class Dashboard : Fragment(),SensorEventListener {
     /**
      * This function is used to change the milestone goal.
      */
-    private fun changeMilestoneGoal(mainIns: MainActivity){
+    private fun changeMilestoneGoal(mainIns: MainActivity) {
 
         val builder = AlertDialog.Builder(mainIns)
         builder.setTitle("Do you want to change Milestone Goal ?")
@@ -212,7 +205,7 @@ class Dashboard : Fragment(),SensorEventListener {
     /**
      * update the changed milestone steps from user, change the number in dashboard.xml
      */
-    private fun updateMilestoneGoal(newGoal: Int,mainIns: MainActivity){
+    private fun updateMilestoneGoal(newGoal: Int, mainIns: MainActivity) {
         val rootView = mainIns
         val milestoneGoal = rootView.findViewById<TextView>(R.id.milestoneNumberText)
         val newGoalString = newGoal.toString()
@@ -221,13 +214,14 @@ class Dashboard : Fragment(),SensorEventListener {
     }
 
 
-    public fun accessMilestone(mainIns: MainActivity){
+    public fun accessMilestone(mainIns: MainActivity) {
         changeMilestoneGoal(mainIns)
     }
 
-    public fun acessDaily(rootView: View, mainIns: MainActivity){
+    public fun acessDaily(rootView: View, mainIns: MainActivity) {
         displayAlertDialog(rootView, mainIns)
     }
+
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
     }
