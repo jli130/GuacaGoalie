@@ -61,13 +61,15 @@ class MainActivity : AppCompatActivity() {
             val name = userList[0].name
             val about = userList[0].about
             val goal = userList[0].goal
+            val milestone = userList[0].milestone
             val dName = findViewById<TextView>(R.id.usernameText)
             val dAbout = findViewById<TextView>(R.id.aboutMeMessageText)
             val dGoal = findViewById<TextView>(R.id.weeklyGoalNumberText)
+            val dMile = findViewById<TextView>(R.id.milestoneNumberText)
             dName.text = name
             dAbout.text = about
             dGoal.text = goal.toString()
-
+            dMile.text = milestone.toString()
 
         }
 
@@ -101,11 +103,11 @@ class MainActivity : AppCompatActivity() {
 
 
         milestoneButton.setOnClickListener {
-            dashboard.accessMilestone(mainActivityInstance)
+            dashboard.accessMilestone(mainActivityInstance, db)
         }
 
         stepsTodayButton3.setOnClickListener {
-            dashboard.acessDaily(dashboardView, mainActivityInstance)
+            dashboard.acessDaily(dashboardView, mainActivityInstance, db)
         }
 
         // Initialize the ActivityResultLauncher for taking a picture
