@@ -25,6 +25,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.Manifest
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
 
@@ -74,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         val milestoneButton = findViewById<ImageButton>(R.id.milestoneGoalButton)
         val stepsTodayButton3 = findViewById<ImageButton>(R.id.stepsTodayButton3)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
+        val editText = findViewById<EditText>(R.id.aboutMeMessageText)
+
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.dashboard
@@ -132,6 +136,24 @@ class MainActivity : AppCompatActivity() {
             showChangeProfilePhotoDialog()
         }
 
+        // These two listeners are for changing the about me text.
+        // Hide keyboard when user clicks outside EditText
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editText.windowToken, 0)
+            }
+        }
+
+        // Show keyboard and enable editing when EditText is clicked
+        editText.setOnClickListener {
+            editText.isFocusableInTouchMode = true
+            editText.requestFocus()
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }
+
+
 
     }
 
@@ -143,7 +165,7 @@ class MainActivity : AppCompatActivity() {
         builder.setItems(options) { dialog, which ->
             when (which) {
                 0 -> {
-                    // This is for talking pictures.
+                    // This is for taking pictures.
 
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED
