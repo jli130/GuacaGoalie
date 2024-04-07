@@ -1,9 +1,14 @@
 package com.su.mynavigation
 
 import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,19 +16,13 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.os.Handler
-import android.os.Looper
+import androidx.fragment.app.Fragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private var stepsTodayText: TextView? = null
-
 /**
  * A simple [Fragment] subclass.
  * Use the [Home.newInstance] factory method to
@@ -136,10 +135,11 @@ class Dashboard : Fragment(), SensorEventListener {
      * button.
      * More functions can be added here !!!
      */
-    private fun displayAlertDialog(rootView: View, mainIns: MainActivity) {
+    private fun displayAlertDialog(rootView: View, mainIns: MainActivity, db: DatabaseHelper) {
         // val rootView = requireView()
         val week_component = rootView.findViewById<View>(R.id.weeklyGoalText)
         val day_component = rootView.findViewById<View>(R.id.dailyGoalText)
+        val switch = rootView.findViewById<TextView>(R.id.weeklyGoalNumberText)
         val alertDialogBuilder = AlertDialog.Builder(mainIns)
         alertDialogBuilder.setTitle("Setting")
 
@@ -150,6 +150,7 @@ class Dashboard : Fragment(), SensorEventListener {
                 // actions when user presses OK button
                 week_component.visibility = View.INVISIBLE
                 day_component.visibility = View.VISIBLE
+                switch.text = (db.getAllInfo()[0].goal/7).toString()
                 dialog.dismiss()
             }
             alertDialogBuilder.setNegativeButton("Cancel") { dialog, which ->
@@ -161,6 +162,7 @@ class Dashboard : Fragment(), SensorEventListener {
             alertDialogBuilder.setPositiveButton("OK") { dialog, which ->
                 day_component.visibility = View.INVISIBLE
                 week_component.visibility = View.VISIBLE
+                switch.text = db.getAllInfo()[0].goal.toString()
                 dialog.dismiss()
             }
             alertDialogBuilder.setNegativeButton("Cancel") { dialog, which ->
@@ -176,7 +178,7 @@ class Dashboard : Fragment(), SensorEventListener {
     /**
      * This function is used to change the milestone goal.
      */
-    private fun changeMilestoneGoal(mainIns: MainActivity) {
+    private fun changeMilestoneGoal(mainIns: MainActivity, db: DatabaseHelper) {
 
         val builder = AlertDialog.Builder(mainIns)
         builder.setTitle("Do you want to change Milestone Goal ?")
@@ -190,6 +192,7 @@ class Dashboard : Fragment(), SensorEventListener {
             val newGoal = input.text.toString().toIntOrNull()
             if (newGoal != null) {
                 updateMilestoneGoal(newGoal, mainIns)
+                db.updateMileStone(newGoal, db.getAllInfo()[0])
             } else {
                 dialog.cancel()
             }
@@ -214,12 +217,14 @@ class Dashboard : Fragment(), SensorEventListener {
     }
 
 
-    public fun accessMilestone(mainIns: MainActivity) {
-        changeMilestoneGoal(mainIns)
+    public fun accessMilestone(mainIns: MainActivity, db : DatabaseHelper) {
+        changeMilestoneGoal(mainIns, db)
     }
 
-    public fun acessDaily(rootView: View, mainIns: MainActivity) {
-        displayAlertDialog(rootView, mainIns)
+
+
+    public fun acessDaily(rootView: View, mainIns: MainActivity, db:DatabaseHelper) {
+        displayAlertDialog(rootView, mainIns, db)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

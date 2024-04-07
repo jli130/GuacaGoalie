@@ -188,8 +188,8 @@
 
     <TextView
         android:id="@+id/weeklyGoalNumberText"
-        android:layout_width="127dp"
-        android:layout_height="55dp"
+        android:layout_width="143dp"
+        android:layout_height="59dp"
         android:gravity="center"
         android:text="0"
         android:textColor="#050505"
