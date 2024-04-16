@@ -99,8 +99,8 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper(context, DB_Name, nu
         val values = ContentValues().apply {
             put(Col_About, about)
         }
-        val whereClause = "$Col_Name = ?"
-        val whereArgs = arrayOf(user.name)
+        val whereClause = "$Col_About = ?"
+        val whereArgs = arrayOf(user.about)
         db.update(TableName, values, whereClause, whereArgs)
         db.close()
 
@@ -121,8 +121,8 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper(context, DB_Name, nu
         val values = ContentValues().apply {
             put(Col_MileStone, ms)
         }
-        val whereClause = "$Col_Name = ?"
-        val whereArgs = arrayOf(user.name)
+        val whereClause = "$Col_MileStone = ?"
+        val whereArgs = arrayOf(user.milestone.toString())
         db.update(TableName, values, whereClause, whereArgs)
         db.close()
 
@@ -156,8 +156,8 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper(context, DB_Name, nu
         val values = ContentValues().apply {
             put(Col_Goal, goal)
         }
-        val whereClause = "$Col_Name = ?"
-        val whereArgs = arrayOf(user.name)
+        val whereClause = "$Col_Goal = ?"
+        val whereArgs = arrayOf(user.goal.toString())
         db.update(TableName, values, whereClause, whereArgs)
         db.close()
 

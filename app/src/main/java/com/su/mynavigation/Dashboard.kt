@@ -28,30 +28,16 @@ private var stepsTodayText: TextView? = null
  * Use the [Home.newInstance] factory method to
  * create an instance of this fragment.
  */
-class Dashboard : Fragment(), SensorEventListener {
+class Dashboard : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var sensorManager: SensorManager
-    private var stepSensor: Sensor? = null
-    private val handler = Handler(Looper.getMainLooper())
-    private val updateTask = object : Runnable {
-        private lateinit var imageButton: ImageButton
-        override fun run() {
-            stepsTodayText?.text = "Steps Today: ${currentStepCount}"
-            handler.postDelayed(this, 1000) // Schedule this task again after 1 second
-        }
-    }
+
+
     private var currentStepCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-
-        if (stepSensor == null) {
-            //handle absense sensor
-        }
 
 
         arguments?.let {
@@ -61,31 +47,13 @@ class Dashboard : Fragment(), SensorEventListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        stepSensor?.let { sensor ->
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI)
-        }
-        handler.post(updateTask)
-    }
 
-    override fun onPause() {
-        super.onPause()
-        sensorManager.unregisterListener(this)
-        handler.removeCallbacks(updateTask)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         stepsTodayText = view.findViewById(R.id.stepsTodayText)
     }
 
-    override fun onSensorChanged(event: SensorEvent?) {
-        if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER) {
-            currentStepCount = event.values[0].toInt()
-            // The UI update will be handled by the Runnable task
-        }
-    }
 
 
     override fun onCreateView(
@@ -227,8 +195,5 @@ class Dashboard : Fragment(), SensorEventListener {
         displayAlertDialog(rootView, mainIns, db)
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-    }
 
 }

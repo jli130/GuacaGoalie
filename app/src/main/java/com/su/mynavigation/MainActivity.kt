@@ -26,11 +26,14 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.Manifest
 import android.content.Context
-import android.view.inputmethod.InputMethodManager
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SensorEventListener{
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var db: DatabaseHelper
@@ -40,26 +43,42 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainActivityInstance: MainActivity
     private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFromGalleryLauncher: ActivityResultLauncher<Intent>
+    private var sensorManager: SensorManager? = null
+    private var totalSteps = 0f
+    companion object{
+        private const val ACTIVITY_RECOGNITION_REQUEST_CODE = 1
+    }
+    // Creating a variable which will give the running status
+    // and initially given the boolean value as false
+    private var running = false
+
+    // Creating a variable which will counts total steps
+    // and it has been given the value of 0 float
+
+
+    // Creating a variable  which counts previous total
+    // steps and it has also been given the value of 0 float
+    private var previousTotalSteps = 0f
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_dashboard)
+
         dashboardView = window.decorView.rootView
         dashboard = Dashboard()
         mainActivityInstance = this
         db = DatabaseHelper(this)
-        //db.deleteAll()
-        //val user1 = UserListModel( "Nathan", "OMG HELLO! Howdy There! My name is John Doe! I am a thrilled user of Guacagoalie who loves travelling, having fun, and working out! I see myself using this app to help make my future more active and pleasant.\"\n", 0, 0, 0, 0, 0)
-        //db.insert(user1)
+        val editButton = findViewById<Button>(R.id.button2)
+        loadData()
+        resetSteps()
         userList = db.getAllInfo()
         if (userList.isEmpty()) {
             val nextPage = Intent(this, Intro::class.java)
             startActivity(nextPage)
             finish()
         } else {
-
-
             val name = userList[0].name
             val about = userList[0].about
             val goal = userList[0].goal
@@ -68,18 +87,27 @@ class MainActivity : AppCompatActivity() {
             val dAbout = findViewById<TextView>(R.id.aboutMeMessageText)
             val dGoal = findViewById<TextView>(R.id.weeklyGoalNumberText)
             val dMile = findViewById<TextView>(R.id.milestoneNumberText)
+            val dsteps = findViewById<TextView>(R.id.stepsNumberText)
             dName.text = name
             dAbout.text = about
             dGoal.text = goal.toString()
             dMile.text = milestone.toString()
-
+            dsteps.text = userList[0].steps.toString()
         }
+
+
+        editButton.setOnClickListener(){
+            val nextPage = Intent(this, Edit::class.java)
+            startActivity(nextPage)
+            finish()
+        }
+
+        // Adding a context of SENSOR_SERVICE as Sensor Manager
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         val milestoneButton = findViewById<ImageButton>(R.id.milestoneGoalButton)
         val stepsTodayButton3 = findViewById<ImageButton>(R.id.stepsTodayButton3)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
-        val editText = findViewById<EditText>(R.id.aboutMeMessageText)
-
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.dashboard
@@ -138,26 +166,11 @@ class MainActivity : AppCompatActivity() {
             showChangeProfilePhotoDialog()
         }
 
-        // These two listeners are for changing the about me text.
-        // Hide keyboard when user clicks outside EditText
-        editText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(editText.windowToken, 0)
-            }
-        }
-
-        // Show keyboard and enable editing when EditText is clicked
-        editText.setOnClickListener {
-            editText.isFocusableInTouchMode = true
-            editText.requestFocus()
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
-        }
-
-
 
     }
+
+
+
 
     private fun showChangeProfilePhotoDialog() {
         val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
@@ -167,7 +180,7 @@ class MainActivity : AppCompatActivity() {
         builder.setItems(options) { dialog, which ->
             when (which) {
                 0 -> {
-                    // This is for taking pictures.
+                    // This is for talking pictures.
 
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED
@@ -220,6 +233,107 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+
+    override fun onResume() {
+        super.onResume()
+        running = true
+
+        // Returns the number of steps taken by the user since the last reboot while activated
+        // This sensor requires permission android.permission.ACTIVITY_RECOGNITION.
+        // So don't forget to add the following permission in AndroidManifest.xml present in manifest folder of the app.
+        val stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+
+
+        if (stepSensor == null) {
+            // This will give a toast message to the user if there is no sensor in the device
+            Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
+        } else {
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
+                != PackageManager.PERMISSION_GRANTED){
+
+                ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+                    ACTIVITY_RECOGNITION_REQUEST_CODE)
+
+            }
+            // Rate suitable for the user interface
+            sensorManager?.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI)
+        }
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+
+        // Calling the TextView that we made in activity_main.xml
+        // by the id given to that TextView
+        var tv_stepsTaken = findViewById<TextView>(R.id.stepsNumberText)
+
+        if (running) {
+            totalSteps = event!!.values[0]
+
+            // Current steps are calculated by taking the difference of total steps
+            // and previous steps
+            val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
+
+            // It will show the current steps to the user
+            tv_stepsTaken.text = ("$currentSteps")
+            if(currentSteps % userList[0].milestone == 0 && currentSteps != 0){
+                Toast.makeText(this, "You have reached a mileStone", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun resetSteps() {
+        var tv_stepsTaken = findViewById<TextView>(R.id.stepsNumberText)
+        tv_stepsTaken.setOnClickListener {
+            // This will give a toast message if the user want to reset the steps
+            Toast.makeText(this, "Long tap to reset steps", Toast.LENGTH_SHORT).show()
+        }
+
+        tv_stepsTaken.setOnLongClickListener {
+
+            previousTotalSteps = totalSteps
+            // When the user will click long tap on the screen,
+            // the steps will be reset to 0
+            tv_stepsTaken.text = 0.toString()
+
+            // This will save the data
+            saveData()
+
+            true
+        }
+    }
+
+    private fun saveData() {
+
+        // Shared Preferences will allow us to save
+        // and retrieve data in the form of key,value pair.
+        // In this function we will save data
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+
+        val editor = sharedPreferences.edit()
+        editor.putFloat("key1", previousTotalSteps)
+        editor.putFloat("key2", totalSteps)
+        editor.apply()
+    }
+
+    private fun loadData() {
+
+        // In this function we will retrieve data
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val savedNumber = sharedPreferences.getFloat("key1", 0f)
+        val savedNumbner2 =  sharedPreferences.getFloat("key2", 0f)
+
+        // Log.d is used for debugging purposes
+        Log.d("MainActivity", "$savedNumber")
+
+        previousTotalSteps = savedNumber
+        totalSteps = savedNumbner2
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        // We do not have to write anything in this function for this app
     }
 
 
