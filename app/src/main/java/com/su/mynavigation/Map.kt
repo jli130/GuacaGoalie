@@ -5,16 +5,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.provider.CallLog.Locations
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,9 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlin.collections.Map
 
 
 class Map : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -32,14 +24,17 @@ class Map : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var bottomNav2 : BottomNavigationView
     private var map : GoogleMap? = null
+    private lateinit var latLangDB : LatlngDB
+    private lateinit var llList: List<latlng>
 
     companion object{
-        private const val LOCATION_REQUEST_CODE = 1
+        private val LOCATION_REQUEST_CODE = 1
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_map)
-
+        latLangDB = LatlngDB(this)
+        llList = latLangDB.getAllInfo()
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -89,23 +84,29 @@ class Map : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
             return
         }
         map?.isMyLocationEnabled = true
+
         fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) {location->
             if(location != null){
                 lastLocation = location
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                PlaceMarkeronMap(currentLatLng)
                 map?.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 12f))
             }
         }
+        if(llList.isNotEmpty()){
+            for(i in llList){
+                PlaceMarkeronMap(i)
+            }
+
+        }
     }
 
-    private fun PlaceMarkeronMap(currentLatLng: LatLng){
-        val markerOption = MarkerOptions().position(currentLatLng)
+    private fun PlaceMarkeronMap(currentLatLng: latlng){
+        val temp = LatLng(currentLatLng.Lat, currentLatLng.Lng)
+        val markerOption = MarkerOptions().position(temp)
         markerOption.title("$currentLatLng")
         map?.addMarker(markerOption)
 
     }
-
     override fun onMarkerClick(p0: Marker) = false
 
 

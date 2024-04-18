@@ -161,6 +161,7 @@ class Dashboard : Fragment(){
             if (newGoal != null) {
                 updateMilestoneGoal(newGoal, mainIns)
                 db.updateMileStone(newGoal, db.getAllInfo()[0])
+                mainIns.userList = db.getAllInfo()
             } else {
                 dialog.cancel()
             }
