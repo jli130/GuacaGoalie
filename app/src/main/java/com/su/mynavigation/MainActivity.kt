@@ -106,11 +106,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             val dGoal = findViewById<TextView>(R.id.weeklyGoalNumberText)
             val dMile = findViewById<TextView>(R.id.milestoneNumberText)
             val dsteps = findViewById<TextView>(R.id.stepsNumberText)
+            val dpoints = findViewById<TextView>(R.id.guacpointsText)
             dName.text = name
             dAbout.text = about
             dGoal.text = goal.toString()
             dMile.text = milestone.toString()
             dsteps.text = userList[0].steps.toString()
+            dpoints.text = userList[0].rewards.toString()
         }
 
 
@@ -298,6 +300,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             tv_stepsTaken.text = ("$currentSteps")
             if (currentSteps % userList[0].milestone == 0 && currentSteps != 0) {
                 Toast.makeText(this, "You have reached a mileStone", Toast.LENGTH_SHORT).show()
+                val rewards = userList[0].rewards
+                db.updateRewards(rewards + 100, userList[0])
+                userList = db.getAllInfo()
+                val dpoints = findViewById<TextView>(R.id.guacpointsText)
+                dpoints.text = userList[0].rewards.toString()
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         Manifest.permission.ACCESS_FINE_LOCATION
