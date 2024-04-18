@@ -219,13 +219,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.197" />
 
-    <EditText
+    <TextView
         android:id="@+id/aboutMeMessageText"
-        android:layout_width="329dp"
-        android:layout_height="75dp"
-        android:clickable="true"
+        android:layout_width="324dp"
+        android:layout_height="66dp"
         android:ellipsize="end"
-        android:focusable="false"
         android:maxLines="4"
         android:text="OMG HELLO! Howdy There! My name is John Doe! I am a thrilled user of Guacagoalie who loves travelling, having fun, and working out! I see myself using this app to help make my future more active and pleasant."
         android:textColor="#61269C"
@@ -237,7 +235,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.253"
         app:layout_wrapBehaviorInParent="vertical_only" />
-
 
     <TextView
         android:id="@+id/stepsNumberText"
@@ -383,18 +380,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6" />
-
-    <ImageButton
-        android:id="@+id/aboutMeButton"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_baseline_settings_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.199" />
 
     <ImageButton
         android:id="@+id/milestoneGoalButton"
