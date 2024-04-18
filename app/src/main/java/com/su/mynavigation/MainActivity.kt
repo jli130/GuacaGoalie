@@ -9,11 +9,7 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.InputType
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -21,25 +17,32 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.Manifest
 import android.content.Context
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
+import android.location.Location
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 
 
 class MainActivity : AppCompatActivity(), SensorEventListener{
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var db: DatabaseHelper
-    private lateinit var userList: List<UserListModel>
+    private lateinit var lastLocation : Location
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var userList: List<UserListModel>
+    private lateinit var llList: List<latlng>
     private lateinit var dashboard: Dashboard
+    private lateinit var latLangDB : LatlngDB
     private lateinit var dashboardView: View
+    private var llID : Int = 0
     private lateinit var mainActivityInstance: MainActivity
     private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFromGalleryLauncher: ActivityResultLauncher<Intent>
@@ -47,9 +50,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
     private var totalSteps = 0f
     companion object{
         private const val ACTIVITY_RECOGNITION_REQUEST_CODE = 1
+        private const val LOCATION_REQUEST_CODE = 1
     }
-    // Creating a variable which will give the running status
-    // and initially given the boolean value as false
+
     private var running = false
 
     // Creating a variable which will counts total steps
@@ -65,15 +68,30 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_dashboard)
-
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                MainActivity.LOCATION_REQUEST_CODE
+            )
+        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         dashboardView = window.decorView.rootView
         dashboard = Dashboard()
         mainActivityInstance = this
         db = DatabaseHelper(this)
+        latLangDB = LatlngDB(this)
         val editButton = findViewById<Button>(R.id.button2)
         loadData()
         resetSteps()
+//        latLangDB.deleteAll()
+//        val ll1 = latlng(43.088947, -76.154480, 0)
+//        latLangDB.insert(ll1)
         userList = db.getAllInfo()
+        llList = latLangDB.getAllInfo()
+        llID = llList.size
+
         if (userList.isEmpty()) {
             val nextPage = Intent(this, Intro::class.java)
             startActivity(nextPage)
@@ -88,11 +106,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             val dGoal = findViewById<TextView>(R.id.weeklyGoalNumberText)
             val dMile = findViewById<TextView>(R.id.milestoneNumberText)
             val dsteps = findViewById<TextView>(R.id.stepsNumberText)
+            val dpoints = findViewById<TextView>(R.id.guacpointsText)
             dName.text = name
             dAbout.text = about
             dGoal.text = goal.toString()
             dMile.text = milestone.toString()
             dsteps.text = userList[0].steps.toString()
+            dpoints.text = userList[0].rewards.toString()
         }
 
 
@@ -278,8 +298,30 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
 
             // It will show the current steps to the user
             tv_stepsTaken.text = ("$currentSteps")
-            if(currentSteps % userList[0].milestone == 0 && currentSteps != 0){
+            if (currentSteps % userList[0].milestone == 0 && currentSteps != 0) {
                 Toast.makeText(this, "You have reached a mileStone", Toast.LENGTH_SHORT).show()
+                val rewards = userList[0].rewards
+                db.updateRewards(rewards + 100, userList[0])
+                userList = db.getAllInfo()
+                val dpoints = findViewById<TextView>(R.id.guacpointsText)
+                dpoints.text = userList[0].rewards.toString()
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                        MainActivity.LOCATION_REQUEST_CODE
+                    )
+                }
+                fusedLocationProviderClient.lastLocation.addOnSuccessListener(this) { location ->
+                    if (location != null) {
+                        lastLocation = location
+                        val temp = latlng(location.latitude, location.longitude, llID)
+                        latLangDB.insert(temp)
+                        llList = latLangDB.getAllInfo()
+                        llID = llList.size
+                    }
+                }
             }
         }
     }
