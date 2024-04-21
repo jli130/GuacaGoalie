@@ -172,6 +172,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
                 }
             }
 
+
         // Initialize the ActivityResultLauncher for picking from gallery
         pickFromGalleryLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
