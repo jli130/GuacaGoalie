@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
         mainActivityInstance = this
         db = DatabaseHelper(this)
         latLangDB = LatlngDB(this)
+
         val editButton = findViewById<Button>(R.id.button2)
         loadData()
         resetSteps()

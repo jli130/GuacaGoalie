@@ -132,8 +132,8 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper(context, DB_Name, nu
         val values = ContentValues().apply {
             put(Col_Rewards, rewards)
         }
-        val whereClause = "$Col_Name = ?"
-        val whereArgs = arrayOf(user.name)
+        val whereClause = "$Col_Rewards = ?"
+        val whereArgs = arrayOf(user.rewards.toString())
         db.update(TableName, values, whereClause, whereArgs)
         db.close()
 
