@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Dashboard"
-    android:background="#F4F4F4">
-
+    android:background="@drawable/linear_light_gray_gradient">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,6 +23,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu" />
 
+    <View
+        android:id="@+id/animatedBackgroundTop"
+        android:layout_width="422dp"
+        android:layout_height="90dp"
+        android:alpha="0.8"
+        android:background="@drawable/dashboard_top_background_gradient_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
 
     <TextView
         android:id="@+id/welcomeBackText"
@@ -34,10 +46,10 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintHorizontal_bias="0.365"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.074" />
+        app:layout_constraintVertical_bias="0.021" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -49,7 +61,7 @@
         app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintVertical_bias="0.159" />
 
     <TextView
         android:id="@+id/usernameText"
@@ -60,10 +72,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -77,7 +89,8 @@
         app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416"></androidx.cardview.widget.CardView>
+        app:layout_constraintVertical_bias="0.416"/>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -140,14 +153,15 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
-        android:tint="#040404"
+        android:background="#87A922"
         android:tooltipText="This gives how much you have completed your milestone goal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintVertical_bias="0.398"
+        app:tint="#040404" />
 
     <TextView
         android:id="@+id/progressText"
@@ -196,14 +210,15 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
-        android:tint="#040404"
         android:tooltipText="You can use your GuacPoinrs to buy real stuff here"
+        android:background="#54C1CF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.835" />
+        app:layout_constraintVertical_bias="0.835"
+        app:tint="#040404" />
 
     <TextView
         android:id="@+id/aboutMeText"
@@ -214,15 +229,15 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.089"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.147" />
 
     <TextView
         android:id="@+id/aboutMeMessageText"
-        android:layout_width="324dp"
-        android:layout_height="66dp"
+        android:layout_width="241dp"
+        android:layout_height="111dp"
         android:ellipsize="end"
         android:maxLines="4"
         android:text="OMG HELLO! Howdy There! My name is John Doe! I am a thrilled user of Guacagoalie who loves travelling, having fun, and working out! I see myself using this app to help make my future more active and pleasant."
@@ -230,10 +245,10 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.422"
+        app:layout_constraintHorizontal_bias="0.158"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253"
+        app:layout_constraintVertical_bias="0.211"
         app:layout_wrapBehaviorInParent="vertical_only" />
 
     <TextView
@@ -305,7 +320,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.454" />
@@ -345,12 +360,12 @@
         android:id="@+id/milestoneGoalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Milestone#"
+        android:text="Milestone #"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
+        app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.734" />
@@ -360,20 +375,22 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
-        android:tint="#040404"
+        android:background="#E178C5"
+        app:tint="#000000"
         android:tooltipText="This shows how many steps you've done today"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintHorizontal_bias="0.334"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintVertical_bias="0.454" />
 
     <ImageButton
         android:id="@+id/stepsTodayButton3"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/ic_baseline_settings_24"
+        android:background="#FF8E8F"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.344"
@@ -398,14 +415,15 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@android:drawable/ic_menu_help"
-        android:tint="#000000"
         android:tooltipText="This is the overall virtual points you have after completing goals"
+        android:background="#EFBC9B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintVertical_bias="0.875"
+        app:tint="#000000" />
 
     <TextView
         android:id="@+id/textView"
@@ -425,16 +443,16 @@
         android:id="@+id/profilePhotoButton"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/linear_white_rounded_corner"
         android:padding="0dp"
         android:scaleType="centerInside"
         android:src="@drawable/defaultuser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <Button
         android:id="@+id/button2"
@@ -447,6 +465,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.918" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

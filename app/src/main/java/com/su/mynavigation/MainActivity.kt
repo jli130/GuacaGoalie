@@ -20,35 +20,38 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.Manifest
 import android.content.Context
+import android.graphics.drawable.AnimationDrawable
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.location.Location
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 
 
-class MainActivity : AppCompatActivity(), SensorEventListener{
+class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var db: DatabaseHelper
-    private lateinit var lastLocation : Location
+    private lateinit var lastLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var userList: List<UserListModel>
     private lateinit var llList: List<latlng>
     private lateinit var dashboard: Dashboard
-    private lateinit var latLangDB : LatlngDB
+    private lateinit var latLangDB: LatlngDB
     private lateinit var dashboardView: View
-    private var llID : Int = 0
+    private var llID: Int = 0
     private lateinit var mainActivityInstance: MainActivity
     private lateinit var takePictureLauncher: ActivityResultLauncher<Intent>
     private lateinit var pickFromGalleryLauncher: ActivityResultLauncher<Intent>
     private var sensorManager: SensorManager? = null
     private var totalSteps = 0f
-    companion object{
+
+    companion object {
         private const val ACTIVITY_RECOGNITION_REQUEST_CODE = 1
         private const val LOCATION_REQUEST_CODE = 1
     }
@@ -71,8 +74,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 MainActivity.LOCATION_REQUEST_CODE
             )
         }
@@ -117,7 +122,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
         }
 
 
-        editButton.setOnClickListener(){
+        editButton.setOnClickListener() {
             val nextPage = Intent(this, Edit::class.java)
             startActivity(nextPage)
             finish()
@@ -129,6 +134,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
         val milestoneButton = findViewById<ImageButton>(R.id.milestoneGoalButton)
         val stepsTodayButton3 = findViewById<ImageButton>(R.id.stepsTodayButton3)
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
+        val view: View = findViewById(R.id.animatedBackgroundTop)
+        val animationDrawable: AnimationDrawable = view.background as AnimationDrawable
+
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.dashboard
@@ -188,10 +196,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             showChangeProfilePhotoDialog()
         }
 
-
+        // Animation for the top part of dashboard page.
+        animationDrawable.setEnterFadeDuration(2500)
+        animationDrawable.setExitFadeDuration(5000)
+        animationDrawable.start()
     }
-
-
 
 
     private fun showChangeProfilePhotoDialog() {
@@ -258,7 +267,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
     }
 
 
-
     override fun onResume() {
         super.onResume()
         running = true
@@ -273,11 +281,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
             // This will give a toast message to the user if there is no sensor in the device
             Toast.makeText(this, "No sensor detected on this device", Toast.LENGTH_SHORT).show()
         } else {
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
-                != PackageManager.PERMISSION_GRANTED){
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
 
-                ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
-                    ACTIVITY_RECOGNITION_REQUEST_CODE)
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.ACTIVITY_RECOGNITION),
+                    ACTIVITY_RECOGNITION_REQUEST_CODE
+                )
 
             }
             // Rate suitable for the user interface
@@ -310,8 +321,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                         MainActivity.LOCATION_REQUEST_CODE
                     )
                 }
@@ -367,7 +380,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener{
         // In this function we will retrieve data
         val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         val savedNumber = sharedPreferences.getFloat("key1", 0f)
-        val savedNumbner2 =  sharedPreferences.getFloat("key2", 0f)
+        val savedNumbner2 = sharedPreferences.getFloat("key2", 0f)
 
         // Log.d is used for debugging purposes
         Log.d("MainActivity", "$savedNumber")
