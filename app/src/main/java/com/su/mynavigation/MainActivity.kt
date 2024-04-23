@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 // Not used
             }
         })
-        guacpointsText.text = ""
+        guacpointsText.text = "0"
 
     }
 
