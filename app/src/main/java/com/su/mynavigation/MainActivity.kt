@@ -24,6 +24,8 @@ import android.graphics.drawable.AnimationDrawable
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.location.Location
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -136,6 +138,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val profilePhotoButton = findViewById<ImageButton>(R.id.profilePhotoButton)
         val view: View = findViewById(R.id.animatedBackgroundTop)
         val animationDrawable: AnimationDrawable = view.background as AnimationDrawable
+        val guacpointsText = findViewById<TextView>(R.id.guacpointsText)
 
 
         bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
@@ -200,6 +203,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         animationDrawable.setEnterFadeDuration(2500)
         animationDrawable.setExitFadeDuration(5000)
         animationDrawable.start()
+
+
+        // Set up a TextWatcher to continuously monitor changes in guacpointsText
+        guacpointsText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Convert the text to integer and update level visibility
+                Log.d("MainActivity", "omg this works")
+                val guacPoints = s?.toString()?.toIntOrNull() ?: 0
+                updateLevelVisibility(guacPoints)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Not used
+            }
+        })
+        guacpointsText.text = ""
+
     }
 
 
@@ -393,5 +417,89 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // We do not have to write anything in this function for this app
     }
 
+    // Function to update the visibility of level TextViews based on guacpointsText value
+    fun updateLevelVisibility(guacPoints: Int) {
+        val level1 = findViewById<TextView>(R.id.level1)
+        val level2 = findViewById<TextView>(R.id.level2)
+        val level3 = findViewById<TextView>(R.id.level3)
+        val level4 = findViewById<TextView>(R.id.level4)
+        val level5 = findViewById<TextView>(R.id.level5)
+        val level6 = findViewById<TextView>(R.id.level6)
+        val level7 = findViewById<TextView>(R.id.level7)
+        val level8 = findViewById<TextView>(R.id.level8)
+        val level9 = findViewById<TextView>(R.id.level9)
+        val level10 = findViewById<TextView>(R.id.level10)
+
+        level1.visibility = View.INVISIBLE
+        level2.visibility = View.INVISIBLE
+        level3.visibility = View.INVISIBLE
+        level4.visibility = View.INVISIBLE
+        level5.visibility = View.INVISIBLE
+        level6.visibility = View.INVISIBLE
+        level7.visibility = View.INVISIBLE
+        level8.visibility = View.INVISIBLE
+        level9.visibility = View.INVISIBLE
+        level10.visibility = View.INVISIBLE
+
+        if (guacPoints < 100) {
+            level1.visibility = View.INVISIBLE
+        } else {
+            level1.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 200) {
+            level2.visibility = View.INVISIBLE
+        } else {
+            level2.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 300) {
+            level3.visibility = View.INVISIBLE
+        } else {
+            level3.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 400) {
+            level4.visibility = View.INVISIBLE
+        } else {
+            level4.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 500) {
+            level5.visibility = View.INVISIBLE
+        } else {
+            level5.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 600) {
+            level6.visibility = View.INVISIBLE
+        } else {
+            level6.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 700) {
+            level7.visibility = View.INVISIBLE
+        } else {
+            level7.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 800) {
+            level8.visibility = View.INVISIBLE
+        } else {
+            level8.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 900) {
+            level9.visibility = View.INVISIBLE
+        } else {
+            level9.visibility = View.VISIBLE
+        }
+
+        if (guacPoints < 1000) {
+            level10.visibility = View.INVISIBLE
+        } else {
+            level10.visibility = View.VISIBLE
+        }
+    }
 
 }
